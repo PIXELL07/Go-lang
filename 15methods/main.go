@@ -22,6 +22,7 @@ type Person struct {
 	Status bool
 }
 
+// Receiver appears in its own arguments list btw func keyword & method name
 func (u Person) GetStatus() {
 	fmt.Println("User status is:", u.Status)
 
