@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println("welcome to my time study")
+	fmt.Println("welcome to my GO time study")
 	presentTime := time.Now()
 	fmt.Println(presentTime)
 
