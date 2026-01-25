@@ -209,7 +209,7 @@ func summary(month int) {
 		}
 	}
 
-	// Print summary
+	//  Print summary
 	if month > 0 {
 		fmt.Printf("Total expenses for month %d: $%.2f\n", month, total)
 	} else {
