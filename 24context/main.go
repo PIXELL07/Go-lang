@@ -20,7 +20,7 @@ func task(ctx context.Context) {
 }
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second) // cancles work
 	defer cancel()
 
 	go task(ctx)
