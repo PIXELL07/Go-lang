@@ -8,10 +8,10 @@ import (
 func main() {
 	fmt.Println("Hello, myslices!")
 
-	var fruitList = []string{"apple", "banana", "grapes", "mango"}
+	var fruitList = []string{"apple", "banana", "grapes", "mango"} //slice of string
 	fmt.Printf("type of fruit is %T\n", fruitList)
 
-	fruitList = append(fruitList, "orange", "kiwi")
+	fruitList = append(fruitList, "orange", "kiwi") // append: used for adding
 	fmt.Println(fruitList)
 
 	fruitList = fruitList[1:3] // last range is always non-inclusive , so it will print index 1 and 2
