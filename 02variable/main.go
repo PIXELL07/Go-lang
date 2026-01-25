@@ -17,9 +17,9 @@ func main() {
 	fmt.Println(aaiii)
 	fmt.Printf("variable username is of type: %T \n", aaiii)
 
-	var sandykundi float64 = 255.4557834717491208742
-	fmt.Println(sandykundi)
-	fmt.Printf("variable username is of type: %T \n", sandykundi)
+	var sandy float64 = 255.4557834717491208742
+	fmt.Println(sandy)
+	fmt.Printf("variable username is of type: %T \n", sandy)
 
 	// default value and some alias
 	var yooo int
