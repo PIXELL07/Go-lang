@@ -24,3 +24,23 @@ func greeter() {
 func serveHome(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("<h1>Welcome to golang series on YT</h1>"))
 }
+
+// Modules and dependencies
+// * go mod download
+// * go mod list all
+// * go mod edit
+// * go mod graph
+// * go mod init
+// * go mod tidy
+// * go mod vendor
+// * go mod verify
+// * go mod why
+// * go version -m
+// * go clean -modcache
+// * go run  -mod=versions main.go
+
+// * Module commands outside a module
+// go work init
+// go work edit
+// go work use
+// go work sync
