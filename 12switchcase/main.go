@@ -23,7 +23,7 @@ func main() {
 		fallthrough
 	case 4:
 		fmt.Println("You can move 4 steps")
-		fallthrough
+		fallthrough // by using fallthrough it stops the code and doesnt print the nxt line
 	case 5:
 		fmt.Println("You can move 5 steps")
 	case 6:
