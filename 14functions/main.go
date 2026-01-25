@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("welcome to Functions!")
+	fmt.Println("welcome to Functions!") // Functions are collection of statements
 	greeter()
 
 	result := add(3, 4)
