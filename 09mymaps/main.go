@@ -7,7 +7,7 @@ import (
 func main() {
 	fmt.Println("Hello, My Maps!")
 
-	languages := make(map[string]string)
+	languages := make(map[string]string) // make() allocates zeroed array & returns slice that refers to that array
 
 	languages["en"] = "Hello"
 	languages["es"] = "Hola"
