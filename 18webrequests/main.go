@@ -23,7 +23,7 @@ func main() {
 	databytes, err := io.ReadAll(response.Body)
 
 	if err != nil {
-		panic(err)
+		panic(err) // handles, sometimes breaks n err
 	}
 	content := string(databytes)
 	fmt.Println(content)
