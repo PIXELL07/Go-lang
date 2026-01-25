@@ -10,7 +10,7 @@ type course struct {
 	Price    int
 	Platform string   `json:"website"`
 	Password string   `json:"-"`
-	Tags     []string `json:"tags,omitempty"`
+	Tags     []string `json:"tags,omitempty"` // if nil or null used, to throw the line we use: omitempty
 }
 
 func main() {
