@@ -13,7 +13,7 @@ func main() {
 
 	file, err := os.Create("./myfile.txt")
 
-	// if err != nil {
+	// if err != nil {   // panic() , recover()
 	//	panic(err)
 	// }
 	checkNilError(err)
