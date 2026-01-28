@@ -56,3 +56,15 @@ func main() {
 	wg.Wait()
 	fmt.Println(score)
 }
+
+// Why RWMutex instead of Mutex?
+// *Lock() → exclusive (writers)
+// *RLock() → shared (readers)
+
+// Using RWMutex allows multiple readers to access the shared resource concurrently,
+
+// The code demonstrates how to safely read and write shared data using goroutines, a wait group, and a mutex,
+// while showing why synchronization is necessary in concurrent Go programs.
+
+// *3 writers use Lock()
+// *1 reader uses RLock()
