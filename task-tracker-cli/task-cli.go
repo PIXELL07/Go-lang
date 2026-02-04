@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -45,11 +46,14 @@ func main() {
 }
 
 func printUsage() {
-	panic("unimplemented")
+	fmt.Println("Usage: task-cli <command> [arguments]") // Placeholder implementation , used for demonstration
 }
 
-func requireArgs(i int) {
-	panic("unimplemented")
+func requireArgs(n int) {
+	if len(os.Args) < n {
+		printUsage()
+		os.Exit(1)
+	}
 }
 
 // addTask function definition moved outside the main function
@@ -92,17 +96,21 @@ func updateTask(tasks []Task, idStr, desc string) {
 }
 
 func now() string {
-	panic("unimplemented")
+	return time.Now().UTC().Format(time.RFC3339)
 }
 
-func exitWith(s string) {
-	panic("unimplemented")
+func exitWith(msg string) {
+	fmt.Println("Error:", msg)
+	os.Exit(1)
 }
 
-func parseID(idStr string) any {
-	panic("unimplemented")
+func parseID(s string) int {
+	id, err := strconv.Atoi(s)
+	if err != nil {
+		exitWith("Invalid task ID")
+	}
+	return id
 }
-
 func deleteTask(tasks []Task, idStr string) {
 	id := parseID(idStr)
 	for i, t := range tasks {
