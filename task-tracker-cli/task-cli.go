@@ -144,6 +144,8 @@ func listTasks(tasks []Task, filter string) {
 
 // ----- Utilities ------
 
+// These functions handle file I/O, argument parsing, and other common tasks.
+
 func loadTasks() []Task {
 	if _, err := os.Stat(fileName); os.IsNotExist(err) {
 		return []Task{}
@@ -187,6 +189,8 @@ func exitWith(msg string) {
 	fmt.Println("Error:", msg)
 	os.Exit(1)
 }
+
+// This function prints usage instructions for the CLI tool. It should be called when the user provides invalid input or requests help.
 
 func printUsage() {
 	fmt.Println("Usage:")
