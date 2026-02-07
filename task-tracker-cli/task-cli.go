@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strconv"
@@ -19,16 +20,15 @@ type Task struct {
 
 func main() {
 	if len(os.Args) < 2 {
-		// Assume printUsage() is defined elsewhere
 		printUsage()
 		return
 	}
+
 	command := os.Args[1]
-	// Assume loadTasks() is defined elsewhere
-	//tasks := loadTasks()
-	var tasks []Task // Placeholder since loadTasks isn't defined
+	tasks := loadTasks()
 
 	switch command {
+
 	case "add":
 		if len(os.Args) < 3 {
 			exitWith("Description required")
@@ -42,21 +42,31 @@ func main() {
 	case "delete":
 		requireArgs(3)
 		deleteTask(tasks, os.Args[2])
-	}
-}
 
-func printUsage() {
-	fmt.Println("Usage: task-cli <command> [arguments]") // Placeholder implementation , used for demonstration
-}
+	case "mark-in-progress":
+		requireArgs(3)
+		updateStatus(tasks, os.Args[2], "in-progress")
 
-func requireArgs(n int) {
-	if len(os.Args) < n {
+	case "mark-done":
+		requireArgs(3)
+		updateStatus(tasks, os.Args[2], "done")
+
+	case "list":
+		if len(os.Args) == 3 {
+			listTasks(tasks, os.Args[2])
+		} else {
+			listTasks(tasks, "")
+		}
+
+	default:
 		printUsage()
-		os.Exit(1)
 	}
 }
 
-// addTask function definition moved outside the main function
+//----- Core Functions ------
+
+// These functions modify the tasks slice in place and save to file immediately.
+
 func addTask(tasks []Task, description string) {
 	id := 1
 	if len(tasks) > 0 {
@@ -77,9 +87,8 @@ func addTask(tasks []Task, description string) {
 	fmt.Printf("Task added successfully (ID: %d)\n", id)
 }
 
-func saveTasks(tasks []Task) {
-	panic("unimplemented")
-}
+// TODO: Refactor to return updated tasks instead of modifying in place
+// This will make it easier to test and avoid side effects
 
 func updateTask(tasks []Task, idStr, desc string) {
 	id := parseID(idStr)
@@ -95,22 +104,6 @@ func updateTask(tasks []Task, idStr, desc string) {
 	exitWith("Task not found")
 }
 
-func now() string {
-	return time.Now().UTC().Format(time.RFC3339)
-}
-
-func exitWith(msg string) {
-	fmt.Println("Error:", msg)
-	os.Exit(1)
-}
-
-func parseID(s string) int {
-	id, err := strconv.Atoi(s)
-	if err != nil {
-		exitWith("Invalid task ID")
-	}
-	return id
-}
 func deleteTask(tasks []Task, idStr string) {
 	id := parseID(idStr)
 	for i, t := range tasks {
@@ -136,4 +129,80 @@ func updateStatus(tasks []Task, idStr, status string) {
 		}
 	}
 	exitWith("Task not found")
+}
+
+func listTasks(tasks []Task, filter string) {
+	for _, t := range tasks {
+		if filter == "" || t.Status == filter {
+			fmt.Printf(
+				"[#%d] %s (%s)\n",
+				t.ID, t.Description, t.Status,
+			)
+		}
+	}
+}
+
+// ----- Utilities ------
+
+func loadTasks() []Task {
+	if _, err := os.Stat(fileName); os.IsNotExist(err) {
+		return []Task{}
+	}
+
+	data, err := os.ReadFile(fileName)
+	if err != nil {
+		exitWith("Failed to read tasks file")
+	}
+
+	var tasks []Task
+	json.Unmarshal(data, &tasks)
+	return tasks
+}
+
+func saveTasks(tasks []Task) {
+	data, _ := json.MarshalIndent(tasks, "", "  ")
+	os.WriteFile(fileName, data, 0644)
+}
+
+func parseID(s string) int {
+	id, err := strconv.Atoi(s)
+	if err != nil {
+		exitWith("Invalid task ID")
+	}
+	return id
+}
+
+func now() string {
+	return time.Now().UTC().Format(time.RFC3339)
+}
+
+func requireArgs(n int) {
+	if len(os.Args) < n {
+		printUsage()
+		os.Exit(1)
+	}
+}
+
+func exitWith(msg string) {
+	fmt.Println("Error:", msg)
+	os.Exit(1)
+}
+
+func printUsage() {
+	fmt.Println("Usage:")
+	// ('go run task-cli.go <command> [args]')
+
+	// Task Tracker CLI
+
+	// Commands:
+	//   add "description"
+	//   update <id> "description"
+	//   delete <id>
+	//   mark-in-progress <id>
+	//   mark-done <id>
+	//   list
+	//   list todo
+	//   list in-progress
+	//   list done
+
 }
