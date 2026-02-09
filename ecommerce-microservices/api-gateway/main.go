@@ -2,10 +2,12 @@ package main
 
 import (
 	"bytes"
+	"ecommerce-microservices/middleware"
 	"io"
 	"net/http"
 
-	"api-gateway/middleware"
+	// Removed duplicate import
+	// "api-gateway/middleware" // Removed duplicate import
 
 	"github.com/gin-gonic/gin"
 )
