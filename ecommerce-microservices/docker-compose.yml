@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+
+  user-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: userdb
+    ports:
+      - "5433:5432"
+
+  product-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: productdb
+    ports:
+      - "5434:5432"
+
+  order-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: orderdb
+    ports:
+      - "5435:5432"
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8001:8001"
+    depends_on:
+      - user-db
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "8002:8002"
+    depends_on:
+      - product-db
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "8003:8003"
+    depends_on:
+      - order-db
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
